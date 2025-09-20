@@ -21,6 +21,18 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         // wp-config.php で define('GOOGLE_MAPS_API_KEY', 'xxxx'); と設定してください
         $api_key = defined('GOOGLE_MAPS_API_KEY') ? GOOGLE_MAPS_API_KEY : '';
         ?>
+        <style>
+        /* ペグマン真っ白対策 */
+        .gm-svpc, .gm-style-cc, .gm-style-cc span, .gm-style-cc a {
+            background: none !important;
+        }
+        .gm-style-cc {
+            opacity: 1 !important;
+        }
+        #map-canvas img{
+            width:auto;
+        }        
+        </style>
         <div id="map-canvas" style="width:100%;height:80vh;"></div>
         <?php
         $posts = get_posts([
