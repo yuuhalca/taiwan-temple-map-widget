@@ -41,10 +41,8 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
             letter-spacing: 0.1em;
         }
         #taiwan-map-title.shrink {
-            /* 左下に移動 */
-            transform: scale(0.5) translate(-50%, 0);
-            left: 0;
-            top: 100%;
+            /* 中央→左下の内側へ自然に移動 */
+            transform: scale(0.5) translate(-90vw, 40vh);
             opacity: 1;
         }
         #taiwan-map-title.visible {
