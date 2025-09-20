@@ -22,9 +22,9 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         $api_key = defined('GOOGLE_MAPS_API_KEY') ? GOOGLE_MAPS_API_KEY : '';
         ?>
         <style>
-        #map-canvas img{
-            width:auto;
-        }        
+        #map-canvas .gm-svpc img {
+            max-width: initial;
+        }
         </style>
         <div id="map-canvas" style="width:100%;height:80vh;"></div>
         <?php
