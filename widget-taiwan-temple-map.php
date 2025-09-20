@@ -36,7 +36,7 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
             opacity: 0;
             pointer-events: none;
             z-index: 1000;
-            transition: opacity 0.8s, transform 0.8s cubic-bezier(.4,2,.6,1);
+            transition: opacity 0.8s, transform 0.8s cubic-bezier(.4,2,.2,1);
             font-weight: bold;
             letter-spacing: 0.1em;
         }
