@@ -21,7 +21,7 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         // wp-config.php で define('GOOGLE_MAPS_API_KEY', 'xxxx'); と設定してください
         $api_key = defined('GOOGLE_MAPS_API_KEY') ? GOOGLE_MAPS_API_KEY : '';
         ?>
-        <div id="map-canvas" style="width:100%;height:500px;"></div>
+        <div id="map-canvas" style="width:100%;height:80vh;"></div>
         <?php
         $posts = get_posts([
             'posts_per_page' => -1,
