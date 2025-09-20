@@ -31,8 +31,7 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
             top: 50%;
             transform: translate(-50%, -50%);
             font-size: 5vw;
-            color: #fff;
-            text-shadow: 0 2px 8px #000, 0 0 2px #333;
+            color: darkslategray;
             opacity: 0;
             pointer-events: none;
             z-index: 1000;
