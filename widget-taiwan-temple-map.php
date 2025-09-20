@@ -121,6 +121,12 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
             controlDiv.style.minWidth = '32px';
             controlDiv.style.width = '32px';
             controlDiv.style.padding = '8px 6px';
+            // ▶ボタンにイベントを付与
+            var expandBtn = document.getElementById('expand-btn');
+            if(expandBtn) expandBtn.onclick = function(e) {
+                e.stopPropagation();
+                expandControl();
+            };
         }
         function expandControl() {
             controlDiv.innerHTML = expandedHTML;
@@ -131,16 +137,13 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         }
         function setMinimizeEvent() {
             var minBtn = document.getElementById('minimize-btn');
-            if(minBtn) minBtn.onclick = minimizeControl;
+            if(minBtn) minBtn.onclick = function(e) {
+                e.stopPropagation();
+                minimizeControl();
+            };
         }
         // 最初は展開、3秒後に自動で最小化
         setTimeout(minimizeControl, 3000);
-        // 最小化状態で▶クリック時に展開
-        controlDiv.addEventListener('click', function(e) {
-            if(e.target && e.target.id === 'expand-btn') {
-                expandControl();
-            }
-        });
         setMinimizeEvent();
         var markerData = <?php echo json_encode($markerData, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;
         var centerLat = 0, centerLng = 0;
