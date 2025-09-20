@@ -22,13 +22,6 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         $api_key = defined('GOOGLE_MAPS_API_KEY') ? GOOGLE_MAPS_API_KEY : '';
         ?>
         <style>
-        /* ペグマン真っ白対策 */
-        .gm-svpc, .gm-style-cc, .gm-style-cc span, .gm-style-cc a {
-            background: none !important;
-        }
-        .gm-style-cc {
-            opacity: 1 !important;
-        }
         #map-canvas img{
             width:auto;
         }        
