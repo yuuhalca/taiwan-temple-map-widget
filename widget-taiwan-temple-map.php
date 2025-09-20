@@ -79,7 +79,8 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
             center: new google.maps.LatLng(23.823538, 121.030859),
             zoom: 7,
             styles: mapStyles,
-            mapTypeControl: false // 地図・航空写真ボタンを非表示
+            mapTypeControl: false, // 地図・航空写真ボタンを非表示
+            streetViewControl: true // ペグマン（ストリートビュー）を必ず表示
         };
         var map = new google.maps.Map(mapDiv, opts);
 
