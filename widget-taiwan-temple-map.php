@@ -94,7 +94,6 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         controlDiv.style.flexWrap = 'wrap';
         controlDiv.style.gap = '4px';
         controlDiv.innerHTML = `
-            <span style="font-size:13px;margin-right:6px;">エリア拡大ボタン➡</span>
             <input type="button" value="台湾全体" onclick="toTaiwan()" />
             <input type="button" value="台湾北部" onclick="toTN()" />
             <input type="button" value="台湾中西部" onclick="toTC()" />
