@@ -21,21 +21,6 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         // wp-config.php で define('GOOGLE_MAPS_API_KEY', 'xxxx'); と設定してください
         $api_key = defined('GOOGLE_MAPS_API_KEY') ? GOOGLE_MAPS_API_KEY : '';
         ?>
-        <div id="slideb">
-            <form>
-                <p>
-                    <span>エリア拡大ボタン➡</span>
-                    <input type="button" value="台湾全体" onclick="toTaiwan()" />
-                    <input type="button" value="台湾北部" onclick="toTN()" />
-                    <input type="button" value="台湾中西部" onclick="toTC()" />
-                    <input type="button" value="台湾中東部" onclick="toTE()" />
-                    <input type="button" value="台湾南部" onclick="toTS()" />
-                    <input type="button" value="日本" onclick="toJapan()" />
-                    <input type="button" value="タイ" onclick="toThai()" />
-                    <input type="button" value="アラスカ" onclick="toAlaska()" />
-                </p>
-            </form>
-        </div>
         <div id="map-canvas" style="width:100%;height:500px;"></div>
         <?php
         $posts = get_posts([
@@ -93,9 +78,33 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         var opts = {
             center: new google.maps.LatLng(23.823538, 121.030859),
             zoom: 7,
-            styles: mapStyles
+            styles: mapStyles,
+            mapTypeControl: false // 地図・航空写真ボタンを非表示
         };
         var map = new google.maps.Map(mapDiv, opts);
+
+        // カスタムコントロール（エリア拡大ボタン）
+        var controlDiv = document.createElement('div');
+        controlDiv.style.margin = '10px';
+        controlDiv.style.background = 'rgba(255,255,255,0.95)';
+        controlDiv.style.borderRadius = '8px';
+        controlDiv.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+        controlDiv.style.padding = '8px 10px';
+        controlDiv.style.display = 'flex';
+        controlDiv.style.flexWrap = 'wrap';
+        controlDiv.style.gap = '4px';
+        controlDiv.innerHTML = `
+            <span style="font-size:13px;margin-right:6px;">エリア拡大ボタン➡</span>
+            <input type="button" value="台湾全体" onclick="toTaiwan()" />
+            <input type="button" value="台湾北部" onclick="toTN()" />
+            <input type="button" value="台湾中西部" onclick="toTC()" />
+            <input type="button" value="台湾中東部" onclick="toTE()" />
+            <input type="button" value="台湾南部" onclick="toTS()" />
+            <input type="button" value="日本" onclick="toJapan()" />
+            <input type="button" value="タイ" onclick="toThai()" />
+            <input type="button" value="アラスカ" onclick="toAlaska()" />
+        `;
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
         var markerData = <?php echo json_encode($markerData, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;
         var centerLat = 0, centerLng = 0;
         for (var i = 0; i < markerData.length; i++) {
