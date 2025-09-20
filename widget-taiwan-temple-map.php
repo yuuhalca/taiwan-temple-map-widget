@@ -83,7 +83,7 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         };
         var map = new google.maps.Map(mapDiv, opts);
 
-        // カスタムコントロール（エリア拡大ボタン）
+        // カスタムコントロール（エリア拡大ボタン・最小化対応）
         var controlDiv = document.createElement('div');
         controlDiv.style.margin = '10px';
         controlDiv.style.background = 'rgba(255,255,255,0.95)';
@@ -93,7 +93,12 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         controlDiv.style.display = 'flex';
         controlDiv.style.flexWrap = 'wrap';
         controlDiv.style.gap = '4px';
-        controlDiv.innerHTML = `
+        controlDiv.style.alignItems = 'center';
+        controlDiv.style.transition = 'width 0.3s, min-width 0.3s, padding 0.3s';
+        controlDiv.id = 'custom-area-control';
+
+        // 展開状態のHTML
+        var expandedHTML = `
             <input type="button" value="台湾全体" onclick="toTaiwan()" />
             <input type="button" value="台湾北部" onclick="toTN()" />
             <input type="button" value="台湾中西部" onclick="toTC()" />
@@ -102,8 +107,41 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
             <input type="button" value="日本" onclick="toJapan()" />
             <input type="button" value="タイ" onclick="toThai()" />
             <input type="button" value="アラスカ" onclick="toAlaska()" />
+            <span id="minimize-btn" style="cursor:pointer;font-size:18px;margin-left:8px;">◀</span>
         `;
+        // 最小化状態のHTML
+        var minimizedHTML = `<span id="expand-btn" style="cursor:pointer;font-size:18px;">▶</span>`;
+
+        controlDiv.innerHTML = expandedHTML;
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(controlDiv);
+
+        // 最小化・展開の切り替え
+        function minimizeControl() {
+            controlDiv.innerHTML = minimizedHTML;
+            controlDiv.style.minWidth = '32px';
+            controlDiv.style.width = '32px';
+            controlDiv.style.padding = '8px 6px';
+        }
+        function expandControl() {
+            controlDiv.innerHTML = expandedHTML;
+            controlDiv.style.minWidth = '';
+            controlDiv.style.width = '';
+            controlDiv.style.padding = '8px 10px';
+            setMinimizeEvent();
+        }
+        function setMinimizeEvent() {
+            var minBtn = document.getElementById('minimize-btn');
+            if(minBtn) minBtn.onclick = minimizeControl;
+        }
+        // 最初は展開、3秒後に自動で最小化
+        setTimeout(minimizeControl, 3000);
+        // 最小化状態で▶クリック時に展開
+        controlDiv.addEventListener('click', function(e) {
+            if(e.target && e.target.id === 'expand-btn') {
+                expandControl();
+            }
+        });
+        setMinimizeEvent();
         var markerData = <?php echo json_encode($markerData, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;
         var centerLat = 0, centerLng = 0;
         for (var i = 0; i < markerData.length; i++) {
