@@ -298,8 +298,17 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
                 minimizeControl();
             };
         }
-        // 最初は展開、3秒後に自動で最小化
-        setTimeout(minimizeControl, 3000);
+        // 地図が表示されたら3秒後に最小化（IntersectionObserver使用）
+        function startMinimizeTimerWhenVisible() {
+            var observer = new window.IntersectionObserver(function(entries) {
+                if(entries[0].isIntersecting) {
+                    setTimeout(minimizeControl, 3000);
+                    observer.disconnect();
+                }
+            }, { threshold: 0.1 });
+            observer.observe(mapDiv);
+        }
+        startMinimizeTimerWhenVisible();
         setMinimizeEvent();
         var markerData = <?php echo json_encode($markerData, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); ?>;
         var centerLat = 0, centerLng = 0;
