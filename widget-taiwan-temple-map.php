@@ -25,8 +25,33 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         #map-canvas .gm-svpc img {
             max-width: initial;
         }
+        #taiwan-map-title {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5vw;
+            color: #fff;
+            text-shadow: 0 2px 8px #000, 0 0 2px #333;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            transition: opacity 0.8s, transform 0.8s cubic-bezier(.4,2,.6,1);
+            font-weight: bold;
+            letter-spacing: 0.1em;
+        }
+        #taiwan-map-title.shrink {
+            transform: scale(0.5) translate(calc(-50vw + 50%), calc(50vh - 50%));
+            opacity: 1;
+        }
+        #taiwan-map-title.visible {
+            opacity: 1;
+        }
         </style>
-        <div id="map-canvas" style="width:100%;height:80vh;"></div>
+        <div style="position:relative;width:100%;height:80vh;">
+            <div id="taiwan-map-title">台湾寺マップ</div>
+            <div id="map-canvas" style="width:100%;height:100%;"></div>
+        </div>
         <?php
         $posts = get_posts([
             'posts_per_page' => -1,
@@ -56,7 +81,8 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         <script src="//maps.googleapis.com/maps/api/js?key=<?php echo esc_attr($api_key); ?>&libraries=places,geometry,places"></script>
         <script>
         var marker = [], infoWindow = [];
-        var mapDiv = document.getElementById("map-canvas");
+    var mapDiv = document.getElementById("map-canvas");
+    var mapTitle = document.getElementById("taiwan-map-title");
         var mapStyles = [
             {
                 "featureType": "all",
@@ -302,6 +328,13 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         function startMinimizeTimerWhenVisible() {
             var observer = new window.IntersectionObserver(function(entries) {
                 if(entries[0].isIntersecting) {
+                    // タイトルアニメーション
+                    if(mapTitle) {
+                        mapTitle.classList.add('visible');
+                        setTimeout(function(){
+                            mapTitle.classList.add('shrink');
+                        }, 2000);
+                    }
                     setTimeout(minimizeControl, 3000);
                     observer.disconnect();
                 }
