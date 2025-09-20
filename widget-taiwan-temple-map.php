@@ -42,7 +42,7 @@ class Taiwan_Temple_Map_Widget extends Widget_Base {
         }
         #taiwan-map-title.shrink {
             /* 中央→左下の内側へ自然に移動 */
-            transform: scale(0.5) translate(-90vw, 40vh);
+            transform: scale(0.5) translate(calc(-50vw + 50%), calc(50vh - 50%));
             opacity: 1;
         }
         #taiwan-map-title.visible {
